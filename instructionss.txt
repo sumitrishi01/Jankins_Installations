@@ -1,0 +1,34 @@
+Dockerfile
+
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y systemd
+
+RUN systemctl mask systemd-logind.service system-udevd.service && \
+    systemctl mask getty.target systemd-getty-generator
+
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+CMD [ "/lib/systemd/systemd" ]
+
+
+
+step1 docker build -t <imageName:tagname> .
+step2 docker run --privileged -it -p 8080:8080 --name <containerName/id> <imageName:tagname>
+step3 docker exec -it <containerName/id>bin/bash
+step4 apt update
+step5 apt list --upgradable
+step6 apt install openjdk-17-jre
+step7 apt-get install wget gnupg2
+step8 wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add -
+step9 sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+step10 apt-get update
+step11 apt-get install openjdk-17-jre-headless wget gnupg2 jenkins
+step12 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+step13 apt-get update
+step14 apt-get install jenkins
+step15 systemctl enable jenkins
+step16 systemctl start jenkins
+step17 http://localhost:8080
